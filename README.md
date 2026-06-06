@@ -181,7 +181,7 @@ AppEat-Main
 
 ## Estado del Proyecto
 
-Versión MVP funcional desarrollada con fines académicos. 
+Versión MVP funcional desarrollada con fines académicos.  
 
 Se implementaron las funcionalidades esenciales definidas para la entrega final del proyecto de Ingeniería de Software.
 
