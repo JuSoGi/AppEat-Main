@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import './App.css';
+import React, { useState } from "react";
+import "./App.css";
 
 function App() {
   const [logged, setLogged] = useState(false);
@@ -7,32 +7,77 @@ function App() {
 
   const [productos, setProductos] = useState([
     { nombre: "Arroz", cantidad: 10 },
-    { nombre: "Leche", cantidad: 5 }
+    { nombre: "Leche", cantidad: 5 },
   ]);
 
   const [nuevo, setNuevo] = useState({
     nombre: "",
-    cantidad: ""
+    cantidad: "",
   });
 
   const [registro, setRegistro] = useState({
     nombre: "",
     email: "",
-    password: ""
+    password: "",
   });
 
-  const agregarProducto = () => {
-    if (!nuevo.nombre || !nuevo.cantidad) return;
+  /**
+   * Simula el inicio de sesión del usuario.
+   */
+  function iniciarSesion() {
+    setLogged(true);
+  }
 
-    setProductos([...productos, nuevo]);
+  /**
+   * Cierra la sesión actual del usuario.
+   */
+  function cerrarSesion() {
+    setLogged(false);
+  }
+
+  /**
+   * Simula el registro de un nuevo usuario.
+   */
+  function registrarUsuario() {
+    if (!registro.nombre || !registro.email || !registro.password) {
+      alert("Por favor complete todos los campos");
+      return;
+    }
+
+    alert("Usuario registrado correctamente");
+
+    setRegistro({
+      nombre: "",
+      email: "",
+      password: "",
+    });
+  }
+
+  /**
+   * Agrega un nuevo producto al inventario.
+   * Verifica que los campos estén completos antes de registrarlo.
+   */
+  function agregarProducto() {
+    if (!nuevo.nombre || !nuevo.cantidad) {
+      alert("Debe completar todos los campos");
+      return;
+    }
+
+    setProductos([
+      ...productos,
+      {
+        nombre: nuevo.nombre,
+        cantidad: Number(nuevo.cantidad),
+      },
+    ]);
 
     setNuevo({
       nombre: "",
-      cantidad: ""
+      cantidad: "",
     });
 
     alert("Donación publicada correctamente");
-  };
+  }
 
   if (!logged) {
     return (
@@ -45,7 +90,7 @@ function App() {
           <input placeholder="Correo electrónico" />
           <input placeholder="Contraseña" type="password" />
 
-          <button onClick={() => setLogged(true)}>
+          <button onClick={iniciarSesion}>
             Ingresar
           </button>
 
@@ -59,7 +104,7 @@ function App() {
             onChange={(e) =>
               setRegistro({
                 ...registro,
-                nombre: e.target.value
+                nombre: e.target.value,
               })
             }
           />
@@ -70,7 +115,7 @@ function App() {
             onChange={(e) =>
               setRegistro({
                 ...registro,
-                email: e.target.value
+                email: e.target.value,
               })
             }
           />
@@ -82,12 +127,12 @@ function App() {
             onChange={(e) =>
               setRegistro({
                 ...registro,
-                password: e.target.value
+                password: e.target.value,
               })
             }
           />
 
-          <button>
+          <button onClick={registrarUsuario}>
             Registrarse
           </button>
         </div>
@@ -97,7 +142,6 @@ function App() {
 
   return (
     <div className="container">
-
       <div className="card">
         <h1>🍽️ AppEat</h1>
 
@@ -109,7 +153,7 @@ function App() {
           Publicar Donación
         </button>
 
-        <button onClick={() => setLogged(false)}>
+        <button onClick={cerrarSesion}>
           Cerrar Sesión
         </button>
       </div>
@@ -119,9 +163,9 @@ function App() {
           <h2>Inventario de Donaciones</h2>
 
           <ul>
-            {productos.map((p, i) => (
-              <li key={i}>
-                {p.nombre} - {p.cantidad} unidades
+            {productos.map((producto, index) => (
+              <li key={index}>
+                {producto.nombre} - {producto.cantidad} unidades
               </li>
             ))}
           </ul>
@@ -138,18 +182,19 @@ function App() {
             onChange={(e) =>
               setNuevo({
                 ...nuevo,
-                nombre: e.target.value
+                nombre: e.target.value,
               })
             }
           />
 
           <input
             placeholder="Cantidad"
+            type="number"
             value={nuevo.cantidad}
             onChange={(e) =>
               setNuevo({
                 ...nuevo,
-                cantidad: e.target.value
+                cantidad: e.target.value,
               })
             }
           />
